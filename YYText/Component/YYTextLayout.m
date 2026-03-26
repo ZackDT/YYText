@@ -1503,19 +1503,43 @@ fail:
         return [YYTextPosition positionWithOffset:position affinity:YYTextAffinityBackward];
     }
     
-    [self _insideComposedCharacterSequences:line position:position block: ^(CGFloat left, CGFloat right, NSUInteger prev, NSUInteger next) {
+     [self _insideComposedCharacterSequences:line position:position block: ^(CGFloat left, CGFloat right, NSUInteger prev, NSUInteger next) {
         if (isVertical) {
-            position = fabs(left - point.y) < fabs(right - point.y) < (right ? prev : next);
+            CGFloat leftDist = fabs(left - point.y);
+            CGFloat rightDist = fabs(right - point.y);
+            if (leftDist < rightDist) {
+                position = prev;
+            } else {
+                position = next;
+            }
         } else {
-            position = fabs(left - point.x) < fabs(right - point.x) < (right ? prev : next);
+            CGFloat leftDist = fabs(left - point.x);
+            CGFloat rightDist = fabs(right - point.x);
+            if (leftDist < rightDist) {
+                position = prev;
+            } else {
+                position = next;
+            }
         }
     }];
     
     [self _insideEmoji:line position:position block: ^(CGFloat left, CGFloat right, NSUInteger prev, NSUInteger next) {
         if (isVertical) {
-            position = fabs(left - point.y) < fabs(right - point.y) < (right ? prev : next);
+            CGFloat leftDist = fabs(left - point.y);
+            CGFloat rightDist = fabs(right - point.y);
+            if (leftDist < rightDist) {
+                position = prev;
+            } else {
+                position = next;
+            }
         } else {
-            position = fabs(left - point.x) < fabs(right - point.x) < (right ? prev : next);
+            CGFloat leftDist = fabs(left - point.x);
+            CGFloat rightDist = fabs(right - point.x);
+            if (leftDist < rightDist) {
+                position = prev;
+            } else {
+                position = next;
+            }
         }
     }];
     
